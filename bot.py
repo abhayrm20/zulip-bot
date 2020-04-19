@@ -44,58 +44,76 @@ class ZulipBot(object):
 
         print("Sucessfully heard.")
 
-        if content[0].lower() == "GoKhareedo" or content[0] == "@**GoKhareedo**":
+        if content[0] == "Gokhareedo" or content[0] == "@**GoKhareedo**":
+            try:
+                if content[1].lower() == "help":
+                    self.client.send_message({
+                        "type": "stream",
+                        "subject": msg["subject"],
+                        "to": msg["display_recipient"],
+                        "content": "Hey there! How are you doing?\n"
+                                   "Do you need help?\n"
+                                   "We have three features:\n"
+                                   "1. Nearby Store: It will show the nearby store to choose from for the grocery!\nUsage: @Gokhareedo loc <any location>\nExample: @GoKhareedo loc Bangalore\n"
+                                   "2. Live Covid Cases: It will show the latest nCovid stats from MoH!\nUsage: @GoKhareedo covid <State-Name>\nExample: @GoKhareedo covid goa\n"
+                                   "3. NLP chat with bot-assistant!\n Usage: @GoKhareedo <your-expression>\nExample: @GoKhareedo Hi"
 
-            if content[1].lower() == "help":
+                    })
+
+                elif content[1].lower() == 'loc':
+                    x = content[2:]
+                    x = " ".join(x)
+
+                    quote_data = self.storeloc.storeloc(x)
+                    self.client.send_message({
+                        "type": "stream",
+                        "to": stream_name,
+                        "subject": stream_topic,
+                        "content": quote_data
+                    })
+
+                elif content[1].lower() == 'covid':
+                    x = content[2:]
+                    x = " ".join(x)
+                    print(x)
+                    quote_data = self.covid.covid(x)
+                    self.client.send_message({
+                        "type": "stream",
+                        "to": stream_name,
+                        "subject": stream_topic,
+                        "content": quote_data
+                    })
+
+
+
+                elif content[1] not in self.subkeys:
+                    ip = content[1:]
+                    ip = " ".join(ip)
+                    message = self.chatbot.get_response(ip).text
+                    self.client.send_message({
+                        "type": "stream",
+                        "subject": msg["subject"],
+                        "to": msg["display_recipient"],
+                        "content": message
+                    })
+
+                else:
+                    self.client.send_message({
+                        "type": "stream",
+                        "subject": msg["subject"],
+                        "to": msg["display_recipient"],
+                        "content": "Please don't leave the parameter blank!"
+                    })
+
+            except:
                 self.client.send_message({
                     "type": "stream",
                     "subject": msg["subject"],
                     "to": msg["display_recipient"],
-                    "content": "Hey there! How are you doing?\n"
-                               "Do you need help?\n"
-                               "We have three features:\n"
-                               "1. Nearby Store: It will show the nearby store to choose from for the grocery!\nUsage: @Gokhareedo loc <any location>\nExample: @GoKhareedo loc Bangalore\n"
-                               "2. Live Covid Cases: It will show the latest nCovid stats from MoH!\nUsage: @GoKhareedo covid <State-Name>\nExample: @GoKhareedo covid goa\n"
-                               "3. NLP chat with bot-assistant!\n Usage: @GoKhareedo <your-expression>\nExample: @GoKhareedo Hi"
-
+                    "content": "Please don't leave the parameter blank!"
                 })
+                main()
 
-            if content[1].lower() == 'loc':
-                x = content[2:]
-                x = " ".join(x)
-
-                quote_data = self.storeloc.storeloc(x)
-                self.client.send_message({
-                    "type": "stream",
-                    "to": stream_name,
-                    "subject": stream_topic,
-                    "content": quote_data
-                })
-
-            if content[1].lower() == 'covid':
-                x = content[2:]
-                x = " ".join(x)
-                print(x)
-                quote_data = self.covid.covid(x)
-                self.client.send_message({
-                    "type": "stream",
-                    "to": stream_name,
-                    "subject": stream_topic,
-                    "content": quote_data
-                })
-
-
-
-            if content[1] not in self.subkeys:
-                ip = content[1:]
-                ip = " ".join(ip)
-                message = self.chatbot.get_response(ip).text
-                self.client.send_message({
-                    "type": "stream",
-                    "subject": msg["subject"],
-                    "to": msg["display_recipient"],
-                    "content": message
-                })
 
 
         elif "GoKhareedo" in content and content[0] != "GoKhareedo":
@@ -105,6 +123,7 @@ class ZulipBot(object):
                 "to": msg["display_recipient"],
                 "content": "Hey there! :blush:"
             })
+
         else:
             return
 
