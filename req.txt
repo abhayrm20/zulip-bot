@@ -24,8 +24,6 @@ Fiona==1.8.13.post1
 Flask==1.1.2
 future==0.18.2
 geographiclib==1.50
-geopandas==0.7.0
-geopy==1.21.0
 giphypop==0.3
 google-api-python-client==1.6.5
 googlemaps==4.2.0
