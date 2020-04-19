@@ -1,6 +1,6 @@
 # GoKhareedo Assistant Bot
 
-![Build status](https://travis-ci.org/ibhanu/python-zulip-api.svg?branch=master)
+![GoKhareedo](./images/GoKareedo.png)
 
 This repository contains the source code for GoKhareedo Assistant Bot
 
@@ -97,6 +97,16 @@ It uses Google Maps API to search for nearby stores from your specified location
     ![NLP4](./images/nlp4)
     
     ![NLP5](./images/nlp5)
+    
+## Contributer
+- [Bhanu Pratap](https://bhanupratap.me)
+- [Abhay RM](https://abhayrm.com)
+- [Mayukh Sil](https://instagram.com/bantai.bombil)
+
+### A Project by Team [NullCrew](https://instagram.com/nullcrewofficial)
+
+![NullCrew Logo](./images/logo.png)
+    
     
     
 
