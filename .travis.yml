@@ -13,7 +13,7 @@ install:
   - pip install virtualenv
   - python -m venv env
   - source env/bin/activate
-  - pip install -r req.txt
+  - pip install -U -r  req.txt
 script:
   - python bot.py
 after_success:
