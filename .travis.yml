@@ -14,7 +14,7 @@ matrix:
       postgresql: "9.3"
 install:
   - pip install virtualenv
-  - python3 -m venv env
+  - python -m venv env
   - source env/bin/activate
   - pip install -r req.txt
 script:
